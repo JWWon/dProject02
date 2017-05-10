@@ -1,5 +1,5 @@
 ﻿  App.cpp
-\\vmware-host\shared folders\documents\visual studio 2017\projects\dproject02_2016104133_원지운\dproject02\app.cpp(92): warning C4715: 'App::clientLogin': 모든 제어 경로에서 값을 반환하지는 않습니다.
-\\vmware-host\shared folders\documents\visual studio 2017\projects\dproject02_2016104133_원지운\dproject02\app.cpp(111): warning C4715: 'App::managerLogin': 모든 제어 경로에서 값을 반환하지는 않습니다.
+\\vmware-host\shared folders\documents\visual studio 2017\projects\dproject02_2016104133_원지운\dproject02\app.cpp(119): warning C4715: 'App::managerLogin': 모든 제어 경로에서 값을 반환하지는 않습니다.
+\\vmware-host\shared folders\documents\visual studio 2017\projects\dproject02_2016104133_원지운\dproject02\app.cpp(100): warning C4715: 'App::clientLogin': 모든 제어 경로에서 값을 반환하지는 않습니다.
   dProject02.vcxproj -> \\vmware-host\Shared Folders\Documents\Visual Studio 2017\Projects\dProject02_2016104133_원지운\Debug\dProject02.exe
   dProject02.vcxproj -> \\vmware-host\Shared Folders\Documents\Visual Studio 2017\Projects\dProject02_2016104133_원지운\Debug\dProject02.pdb (Partial PDB)

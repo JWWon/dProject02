@@ -166,7 +166,7 @@ void App::findStoreByName() {
 	list<bool> check;
 	list<Store*>::iterator iter;
 	for (iter = stores.begin(); iter != stores.end(); iter++) {
-		string storeName = (*iter)->getStoreName;
+		string storeName = (*iter)->getStoreName();
 		if (storeName.find(name)!= string::npos) {
 			count++;
 			cout << count << ". " << storeName << endl;
