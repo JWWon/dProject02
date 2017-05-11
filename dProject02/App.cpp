@@ -9,10 +9,12 @@ App::App(){
 	locations_length = 0;
 
 	loginedUser = NULL;
-	load_users();
+	load_user_file();
+	load_store_file();
+	load_location_file();
 }
 App::~App(){
-	save_users();
+	//save_user_file();
 }
 
 void App::run() {
@@ -93,10 +95,10 @@ bool App::clientLogin() {
 			loginedUser = *iter; // Client 내용으로 정의
 			return true;
 		}
-
-		cout << "아이디 혹은 비밀번호가 잘못되었습니다." << endl;
-		return false;
 	}
+
+	cout << "아이디 혹은 비밀번호가 잘못되었습니다." << endl;
+	return false;
 }
 bool App::managerLogin() {
 	string id, password;
@@ -112,10 +114,10 @@ bool App::managerLogin() {
 			loginedUser = *iter; // Manager 내용으로 정의
 			return true;
 		}
-
-		cout << "아이디 혹은 비밀번호가 잘못되었습니다." << endl;
-		return false;
 	}
+
+	cout << "아이디 혹은 비밀번호가 잘못되었습니다." << endl;
+	return false;
 }
 
 // 고객
@@ -264,7 +266,7 @@ void App::orderFood(Store* store) {
 	cout << "##############################" << endl;
 	store->addOrder(); //주문하기
 	cout << "주문이 완료되었습니다 :)" << endl;
-	cout << "예상 배달시간은 " << "분 입니다." << endl;
+	cout << "예상 배달시간은 " << store->calculateDeliverTime(1,1,1,1) <<"분 입니다." << endl; //TODO: calcDelieverTime 수정
 }
 
 // 관리자
@@ -308,29 +310,43 @@ void App::changeRadius() {
 
 }
 
-void App::load_users() {
+void App::load_user_file() {
 	ifstream fin("user.txt");
 	string record;
 
-	string id, password, name;
-	int userType, locationId;
+	int userType;
+	string id, password;
+	//Client
+	string name;
+	int locationId;
+	//Manager
+	int storeId;
 
 	while (!fin.eof()) {
 		getline(fin, record);
 		stringstream iss(record);
 
-		iss >> id >> password >> name >> userType >> locationId;
+		iss >> userType;
 		User *user;
-		if (userType == CLIENT)
+		if (userType == CLIENT) {
 			user = new Client;
-		else
-			user = new Manager;
+			iss >> id >> password >> name >> locationId;
 
-		user->setID(id);
-		user->setPassword(password);
-		user->setName(name);
-		user->setUserType(userType);
-		user->setLocationID(locationId);
+			user->setUserType(userType);
+			user->setID(id);
+			user->setPassword(password);
+			user->setName(name);
+			user->setLocationID(locationId);
+		}
+		else {
+			user = new Manager;
+			iss >> id >> password >> storeId; //TODO: + 음식점 ID
+
+			user->setUserType(userType);
+			user->setID(id);
+			user->setPassword(password);
+			user->setStoreID(storeId);
+		}
 
 		users.push_back(user);
 		users_length++;
@@ -339,7 +355,63 @@ void App::load_users() {
 	fin.close();
 }
 
-void App::save_users() {
+void App::load_store_file() {
+	ifstream fin("store.txt");
+	string record;
+
+	int storeID;
+	string storeName, storeType;
+	int availableDistance;
+	while (!fin.eof()) {
+		getline(fin, record);
+		stringstream iss(record);
+
+		iss >> storeID >> storeName >> storeType >> availableDistance;
+		Store *store;
+		if (storeName == "한식집") {
+			store = new Korean;
+		}
+		else {
+			store = new Chinese;
+		}
+
+		store->setStoreID(storeID);
+		store->setStoreName(storeName);
+		store->setStoreType(storeType);
+		store->setDistance(availableDistance);
+
+		stores.push_back(store);
+		stores_length++;
+	}
+
+	fin.close();
+}
+
+void App::load_location_file() {
+	ifstream fin("location.txt");
+	string record;
+
+	//userType에 따라 id가 독립적이다!
+	int id, userType, latitude, longitude;
+	while (!fin.eof()) {
+		getline(fin, record);
+		stringstream iss(record);
+
+		iss >> id >> userType >> latitude >> longitude;
+		Location* location = new Location;
+		location->locationId = id;
+		location->locationType = userType;
+		location->latitude = latitude;
+		location->longitude = longitude;
+
+		locations.push_back(location);
+		locations_length++;
+	}
+
+	fin.close();
+}
+
+void App::save_user_file() {
 	ofstream fout("user.txt");
 	ostringstream ssOut;
 

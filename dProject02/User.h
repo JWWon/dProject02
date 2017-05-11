@@ -20,22 +20,26 @@ public:
 
 	void setUserType(int k_userType) { userType = k_userType; }
 	int getUserType() { return userType; }
-
-	void setName(string k_name) { userName = k_name; }
-	string getName() { return userName; }
-
-	void setLocationID(int k_locID) { locationId = k_locID; }
-	int getLocationID() { return locationId; }
 	//END
 
 	//가상함수 GETTER SETTER
 	virtual void printInfo() = 0;
+
+	//Client
+	virtual void setName(string k_name) = 0;
+	virtual string getName() = 0;
+
+	virtual void setLocationID(int k_locID) = 0;
+	virtual int getLocationID() = 0;
+
+	//Manager
+	virtual void setStoreID(int k_storeID) = 0;
+	virtual int getStoreID() = 0;
 	//END
 
 protected:
 	string id;
 	string password;
-	string userName;
 	int userType; // 사용자 종류
-	int locationId;
+	
 };

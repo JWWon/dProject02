@@ -11,8 +11,10 @@ public:
 	~App();
 
 	// 파일 입출력
-	void load_users();
-	void save_users();
+	void load_user_file();
+	void load_store_file();
+	void load_location_file();
+	void save_user_file();
 
 	void run();
 

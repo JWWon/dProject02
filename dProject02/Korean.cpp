@@ -37,3 +37,9 @@ void Korean::addOrder() {
 
 	recievedOrders.push_back(newOrder);
 }
+
+int Korean::calculateDeliverTime(int userLat, int userLon, int storeLat, int storeLon) {
+	double distance = sqrt(pow(storeLat - userLat, 2) + pow(storeLon - userLon, 2));
+
+	return 30 + (int)distance; //(30 + °Å¸®)ºÐ
+}

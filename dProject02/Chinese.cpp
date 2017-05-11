@@ -37,3 +37,9 @@ void Chinese::addOrder() {
 
 	recievedOrders.push_back(newOrder);
 }
+
+int Chinese::calculateDeliverTime(int userLat, int userLon, int storeLat, int storeLon) {
+	double distance = sqrt(pow(storeLat - userLat, 2) + pow(storeLon - userLon, 2));
+
+	return 20 + (int)distance; //(30 + °Å¸®)ºÐ
+}

@@ -1,11 +1,12 @@
 #include "Order.h"
+#include <cmath>
 #include <list>
 #pragma once
 class Store
 {
 public:
-	Store();
-	~Store();
+	Store() {}
+	~Store() {}
 
 	virtual void addOrder() = 0;
 	virtual int calculateDeliverTime(int userLat, int userLon, int storeLat, int storeLon) = 0;
